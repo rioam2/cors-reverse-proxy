@@ -1,0 +1,3 @@
+# Exclude linked modules:
+node_modules/
+.firebaserc
