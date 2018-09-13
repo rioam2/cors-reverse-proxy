@@ -41,9 +41,12 @@ exports.cors = functions.https.onRequest((req, res) => {
     // Define source request headers to retain in transmit request.
     const headersKeep = [
       'accept-encoding',
-      'content-type',
       'accept-language',
-      'authorization'
+      'authorization',
+      'content-security-policy',
+      'content-type',
+      'referrer-policy',
+      'x-frame-options'
     ];
     // Iterate through headers and transfer kept keys to new header object.
     const headers = Object.keys(req.headers)
