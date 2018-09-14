@@ -18,7 +18,9 @@ exports.cors = functions.https.onRequest((req, res) => {
 
     // Validate request origin and destination endpoints with whitelist:
     const regexHostname = /(?:http(?:s)?:\/\/)?(((\S+)(?:.(com|net|edu|org|app)|:\d+)))/;
-    const reqOrigin = req.headers.host.match(regexHostname)[1];
+    const reqOrigin = (req.headers.origin || req.headers.host).match(
+      regexHostname
+    )[1];
     const reqDest = url.match(regexHostname)[1];
     console.log(reqOrigin, reqDest);
     if (
