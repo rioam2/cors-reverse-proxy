@@ -59,14 +59,16 @@ exports.cors = functions.https.onRequest((req, res) => {
       }, {});
 
     // Send Interpreted Request to intended endpoint:
-    return fetch(url, {
+    let fwdRequest = {
       method: req.method,
-      body:
-        req.get('content-type') === 'application/json'
-          ? JSON.stringify(req.body)
-          : req.body,
-      headers
-    }).then(r => {
+      headers,
+    };
+    if (req.method === "POST" || req.method === "PUT") {
+      req.get("content-type") === "application/json"
+          ? (fwdRequest.body = JSON.stringify(req.body))
+          : (fwdRequest.body = req.body);
+      }
+    return fetch(url, fwdRequest).then(r => {
       r.body.on('data', chunk => {
         res.write(chunk);
       });
